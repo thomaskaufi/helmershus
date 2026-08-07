@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import mercury
 
-URI = "tmr:///dev/ttyUSB0"
+URI = "eapi:///dev/ttyUSB0"
 REGION = "EU3"
 ANTENNA = 1
 POWER = 1500  # centi-dBm
 WINDOW_MS = 500
 
-reader = mercury.Reader(URI)
+reader = mercury.Reader(URI, baudrate=115200)
 reader.set_region(REGION)
 reader.set_read_plan([ANTENNA], "GEN2", read_power=POWER)
 
