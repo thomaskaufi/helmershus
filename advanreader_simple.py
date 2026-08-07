@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import mercury
 
-URI = "tmr://192.168.1.100"  # change to reader IP
+URI = "tmr:///dev/ttyUSB0"
 REGION = "EU3"
 ANTENNA = 1
 POWER = 1500  # centi-dBm
