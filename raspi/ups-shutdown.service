@@ -1,0 +1,12 @@
+[Unit]
+Description=UPS HAT (E) USB-C power-loss shutdown
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/ups-hat/ups_shutdown.py
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
