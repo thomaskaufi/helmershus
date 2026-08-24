@@ -1,0 +1,16 @@
+[Unit]
+Description=Helmershus dual Nexmosphere scan
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=helmer
+Group=dialout
+WorkingDirectory=/home/helmer/Desktop/helmershus/helmershus
+ExecStart=/usr/bin/python3 /home/helmer/Desktop/helmershus/helmershus/dual_scan.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
