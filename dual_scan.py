@@ -10,7 +10,7 @@ PORTS = [
 philosophy_end = 20 #Filosofibøger fra 1 til og med...
 DEBUG = True
 
-print("""
+print(f"""
 
 
 ************************************************
@@ -18,8 +18,7 @@ RUNNING dual_scan.py,
 debug mode is {DEBUG}
 """)
 if DEBUG:
-    print("""XR[PB/PU###] - PU = picked up, PB = put back
-X001A[BOOL] - 0 is something placed, 1 is something picked up""")
+    print("XR[PB/PU###] - PU = picked up, PB = put back\nX001A[BOOL] - 0 is something placed, 1 is something picked up")
 print("************************************************")
 
 
