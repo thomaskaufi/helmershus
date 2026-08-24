@@ -18,10 +18,8 @@ RUNNING dual_scan.py,
 debug mode is {DEBUG}
 """)
 if DEBUG:
-    print("""
-    XR[PB/PU###] - PU = picked up, PB = put back
-    X001A[BOOL] - 0 is something placed, 1 is something picked up
-    """)
+    print("""XR[PB/PU###] - PU = picked up, PB = put back
+X001A[BOOL] - 0 is something placed, 1 is something picked up""")
 print("************************************************")
 
 
