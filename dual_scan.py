@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import threading
 import serial
+import paho.mqtt.client as mqtt
 
 BAUD = 115200
 PORTS = [
@@ -9,6 +10,33 @@ PORTS = [
 ]
 philosophy_end = 20 #Filosofibøger fra 1 til og med...
 DEBUG = True
+send_MQTT = True
+
+BROKER = "broker.hivemq.com"
+PORT = 1883
+TOPIC_OUT = "helmerID"
+client = None
+
+
+def mqtt_connect(client, userdata, flags, reason_code, properties):
+    if DEBUG:
+        print("mqtt ok", flush=True)
+
+
+def mqtt_start():
+    global client
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+    client.on_connect = mqtt_connect
+    client.connect(BROKER, PORT, keepalive=60)
+    client.loop_start()
+
+
+def mqtt_send(id):
+    global client
+    client.publish(TOPIC_OUT, id, qos=2, retain=False)
+    if DEBUG:
+        print("message sendt", flush=True)
+
 
 print(f"""
 
@@ -16,11 +44,10 @@ print(f"""
 ************************************************
 RUNNING dual_scan.py,
 debug mode is {DEBUG}
+send_MQTT is {send_MQTT}
 """)
 if DEBUG:
     print("XR[PB/PU###] - PU = picked up, PB = put back\nX001A[BOOL] - 0 is something placed, 1 is something picked up")
-print("************************************************")
-
 
 
 def handler(line):
@@ -28,8 +55,12 @@ def handler(line):
     tag_id = int(line[5:-1])
     if event == "PB":
         print(tag_id, flush=True)
+        if send_MQTT:
+            mqtt_send(tag_id)
     elif event == "PU" and tag_id <= philosophy_end:
         print(0, flush=True)
+        if send_MQTT:
+            mqtt_send(0)
 
 
 def listen(port):
@@ -45,6 +76,9 @@ def listen(port):
         if line.startswith("XR["):
             handler(line)
 
+
+if send_MQTT:
+    mqtt_start()
 
 for p in PORTS:
     threading.Thread(target=listen, args=(p,), daemon=True).start()
