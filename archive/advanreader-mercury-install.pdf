@@ -1,0 +1,211 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 4 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 5 0 R /Resources << /Font << /F1 7 0 R /F2 8 0 R /F3 9 0 R >> >> >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 6 0 R /Resources << /Font << /F1 7 0 R /F2 8 0 R /F3 9 0 R >> >> >>
+endobj
+5 0 obj
+<< /Length 2123 >>
+stream
+BT
+/F1 11 Tf
+/F2 18 Tf
+1 0 0 1 54 772 Tm
+(Helmershus archive) Tj
+/F2 13 Tf
+1 0 0 1 54 732 Tm
+(AdvanReader-10 via Python \(Mercury API\)) Tj
+/F1 10 Tf
+1 0 0 1 54 710 Tm
+(What we actually did to talk to Keonn AdvanReader-10 + Advantenna-p16 from Python on) Tj
+/F1 10 Tf
+1 0 0 1 54 696 Tm
+(Linux. Official Keonn SDKs are Java / C# / C++. Python uses the community wrapper) Tj
+/F1 10 Tf
+1 0 0 1 54 682 Tm
+(gotthardp/python-mercuryapi, compiled against the Novanta/ThingMagic Mercury API C SDK.) Tj
+/F2 13 Tf
+1 0 0 1 54 654 Tm
+(Hardware) Tj
+/F1 10 Tf
+1 0 0 1 54 632 Tm
+(- AdvanReader-10 \(USB, FTDI, RS232-over-USB\) + Advantenna-p16) Tj
+/F1 10 Tf
+1 0 0 1 54 615 Tm
+(- Linux device: /dev/ttyUSB0 \(kernel FTDI driver, no extra driver\)) Tj
+/F1 10 Tf
+1 0 0 1 54 598 Tm
+(- User must be in dialout: sudo usermod -aG dialout $USER then log out/in) Tj
+/F1 10 Tf
+1 0 0 1 54 581 Tm
+(- URI: eapi:///dev/ttyUSB0 baud: 115200 region: EU3) Tj
+/F1 10 Tf
+1 0 0 1 54 564 Tm
+(- Weak USB ports brown out / timeout under RF - use a strong port \(~1 A\)) Tj
+/F2 13 Tf
+1 0 0 1 54 537 Tm
+(Linux install \(the path that worked\)) Tj
+/F1 10 Tf
+1 0 0 1 54 515 Tm
+(No virtualenv. The mercury module was installed into system Python.) Tj
+/F1 10 Tf
+1 0 0 1 54 497 Tm
+(1. Clone the helmershus repo and cd python-mercuryapi-master) Tj
+/F1 10 Tf
+1 0 0 1 54 479 Tm
+(2. Drop the Novanta SDK zip next to the Makefile: mercuryapi-BILBO-1.37.2.24.zip) Tj
+/F1 10 Tf
+1 0 0 1 54 465 Tm
+(\(Makefile curl URL is dead - download manually\)) Tj
+/F1 10 Tf
+1 0 0 1 54 447 Tm
+(3. Install build deps:) Tj
+/F3 8 Tf
+1 0 0 1 66 429 Tm
+(sudo apt-get install -y python3 python3-dev python3-setuptools \\) Tj
+/F3 8 Tf
+1 0 0 1 66 417 Tm
+(  build-essential unzip patch xsltproc libreadline-dev gcc) Tj
+/F1 10 Tf
+1 0 0 1 54 405 Tm
+(4. Build and install against that zip \(do not pip install from PyPI\):) Tj
+/F3 8 Tf
+1 0 0 1 66 387 Tm
+(make APIZIP=mercuryapi-BILBO-1.37.2.24.zip APIVER=1.37.2.24) Tj
+/F3 8 Tf
+1 0 0 1 66 375 Tm
+(sudo make install APIZIP=mercuryapi-BILBO-1.37.2.24.zip APIVER=1.37.2.24) Tj
+/F3 8 Tf
+1 0 0 1 66 363 Tm
+(python3 -c "import mercury; print\('ok'\)") Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Length 2472 >>
+stream
+BT
+/F1 11 Tf
+/F2 13 Tf
+1 0 0 1 54 770 Tm
+(Build fixes we hit) Tj
+/F1 10 Tf
+1 0 0 1 54 748 Tm
+(- Missing xsltproc - LTKC header generation failed \(xsltproc: No such file or) Tj
+/F1 10 Tf
+1 0 0 1 54 734 Tm
+(  directory\)) Tj
+/F1 10 Tf
+1 0 0 1 54 717 Tm
+(- SDK 1.37 vs wrapper: in mercury.c Reader_write_tag_mem, TMR_writeTagMemBytes needs a) Tj
+/F1 10 Tf
+1 0 0 1 54 703 Tm
+(  7th argument. Add NULL:) Tj
+/F3 8 Tf
+1 0 0 1 66 686 Tm
+(ret = TMR_writeTagMemBytes\(&self->reader, tag_filter, bank, address,) Tj
+/F3 8 Tf
+1 0 0 1 66 674 Tm
+(    PyByteArray_Size\(data\), \(uint8_t *\)PyByteArray_AsString\(data\), NULL\);) Tj
+/F1 10 Tf
+1 0 0 1 54 662 Tm
+(- License classifier / PyEval_InitThreads messages were warnings only) Tj
+/F1 10 Tf
+1 0 0 1 54 645 Tm
+(- mercuryapi.patch on 1.37 applied with fuzz; that was OK) Tj
+/F2 13 Tf
+1 0 0 1 54 618 Tm
+(Repo) Tj
+/F1 10 Tf
+1 0 0 1 54 596 Tm
+(- Wrapper + SDK build tree stayed local on Linux) Tj
+/F1 10 Tf
+1 0 0 1 54 579 Tm
+(- Root .gitignore: python-mercuryapi-master/) Tj
+/F1 10 Tf
+1 0 0 1 54 562 Tm
+(- sudo make install is outside git; import mercury survives pulling) Tj
+/F1 10 Tf
+1 0 0 1 54 545 Tm
+(- When first gitignoring the folder, move it aside before pull if mercury.c was edited) Tj
+/F1 10 Tf
+1 0 0 1 54 531 Tm
+(  locally) Tj
+/F2 13 Tf
+1 0 0 1 54 504 Tm
+(Runtime) Tj
+/F1 10 Tf
+1 0 0 1 54 482 Tm
+(- advanreader_simple.py: connect, set_region\("EU3"\), set_read_plan\([1], "GEN2",) Tj
+/F1 10 Tf
+1 0 0 1 54 468 Tm
+(  read_power=...\), read\(500\) loop) Tj
+/F1 10 Tf
+1 0 0 1 54 451 Tm
+(- Power is centi-dBm \(1500 = 15 dBm\). Hardware max ~2700; USB current often limits it) Tj
+/F1 10 Tf
+1 0 0 1 54 434 Tm
+(- Check range: reader.get_power_range\(\)) Tj
+/F1 10 Tf
+1 0 0 1 54 417 Tm
+(- Java Keonn examples \(eapi:///dev/ttyUSB0 + RXTX natives\) also worked; Python Mercury) Tj
+/F1 10 Tf
+1 0 0 1 54 403 Tm
+(  was enough once USB power was OK) Tj
+/F2 13 Tf
+1 0 0 1 54 376 Tm
+(Do not repeat) Tj
+/F1 10 Tf
+1 0 0 1 54 354 Tm
+(- Mac compile \(LTKC / stdint: _STDINT_H vs _STDINT_H_\)) Tj
+/F1 10 Tf
+1 0 0 1 54 337 Tm
+(- pip install python-mercuryapi \(dead JADAK zip URL\)) Tj
+/F1 10 Tf
+1 0 0 1 54 320 Tm
+(- tmr://IP - this unit is USB serial, not Ethernet) Tj
+/F1 10 Tf
+1 0 0 1 54 303 Tm
+(- Leaving Java open on the same /dev/ttyUSB0 while Python connects) Tj
+/F1 10 Tf
+1 0 0 1 54 286 Tm
+(Archived 21 Aug 2026. UHF Keonn path is no longer used; Helmershus continues with two) Tj
+/F1 10 Tf
+1 0 0 1 54 272 Tm
+(Nexmosphere stations.) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+8 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+9 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000267 00000 n 
+0000000413 00000 n 
+0000002588 00000 n 
+0000005112 00000 n 
+0000005182 00000 n 
+0000005257 00000 n 
+trailer
+<< /Size 10 /Root 1 0 R >>
+startxref
+5325
+%%EOF
