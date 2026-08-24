@@ -3,11 +3,12 @@ import threading
 import serial
 
 BAUD = 115200
-philosophy_end = 20 # til og med
 PORTS = [
     "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_BBAUb2A7N12-if00-port0",
     "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_CKALb153608-if00-port0",
 ]
+philosophy_end = 20 #Filosofibøger fra 1 til og med...
+DEBUG = True
 
 
 def handler(line):
@@ -27,7 +28,8 @@ def listen(port):
         line = ser.readline().decode("ascii", errors="replace").strip()
         if not line:
             continue
-        print(f"{name} {line}", flush=True)
+        if DEBUG:
+            print(f"{name} {line}", flush=True)
         if line.startswith("XR["):
             handler(line)
 
