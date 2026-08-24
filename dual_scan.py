@@ -3,10 +3,20 @@ import threading
 import serial
 
 BAUD = 115200
+philosophy_end = 20 # til og med
 PORTS = [
     "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_BBAUb2A7N12-if00-port0",
     "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_CKALb153608-if00-port0",
 ]
+
+
+def handler(line):
+    event = line[3:5]
+    tag_id = int(line[5:-1])
+    if event == "PB":
+        print(tag_id, flush=True)
+    elif event == "PU" and tag_id <= philosophy_end:
+        print(0, flush=True)
 
 
 def listen(port):
@@ -15,8 +25,11 @@ def listen(port):
     print(f"open {name}", flush=True)
     while True:
         line = ser.readline().decode("ascii", errors="replace").strip()
-        if line:
-            print(f"{name} {line}", flush=True)
+        if not line:
+            continue
+        print(f"{name} {line}", flush=True)
+        if line.startswith("XR["):
+            handler(line)
 
 
 for p in PORTS:
