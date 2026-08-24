@@ -8,7 +8,7 @@ PORTS = [
     "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_CKALb153608-if00-port0",
 ]
 philosophy_end = 20 #Filosofibøger fra 1 til og med...
-DEBUG = True
+DEBUG = False
 
 
 def handler(line):
